@@ -1,0 +1,61 @@
+.Home {
+    width: 100%;
+    min-height: 100vh;
+    background: url(../../assets/img/index-bg.png) no-repeat center / 100% 100%;
+    background-attachment: fixed;
+}
+
+.Home .title {
+    padding-top: 30px;
+    text-align: center;
+    color: #00ace0;
+}
+
+.Home .Card-box {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.Home .Card {
+    width: 211px;;
+    padding: 10px 33px 3px 33px;
+    border-radius: 15px;
+    text-align: center;
+}
+@media (max-width: 1199px) {
+    .Home .Card-box {
+        flex-wrap: wrap;
+    }
+}
+@media (max-width: 767px) {
+    .Home .Card-box {
+        position: unset;
+        transform: none;
+        padding-top: 30px;
+    }
+}
+
+.Home .Card img {
+    width: 75%;
+    height: auto;
+}
+.Home .Card a {
+    font-weight: 600;
+    text-decoration: none;
+    color: #000;
+}
+.Home .Card p {
+    line-height: 41px;
+    border-radius: 15px;
+    background: #ece5f4;
+    color: #00ace0;
+    font-size: 23px;
+    text-align: center;
+    letter-spacing: 2px;
+    font-family: cursive;
+    margin: 25px 0 40px;
+}
