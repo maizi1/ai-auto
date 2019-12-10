@@ -1,0 +1,67 @@
+.Bar-card {
+    border-radius: 6px;
+    background-color: #fff;
+}
+.Bar-card canvas {
+    height: 250px;
+}
+.Bar-card-btn {
+    border: none;
+    color: #735cf5;
+    background: #ede8fe;
+}
+
+.Bar-card-btn:hover, .Bar-card-btn:focus {
+    background: #ede8fe;
+}
+
+.Bar-card-btn.activity {
+    color: #fff;
+    background: #6666ff;
+}
+.hebdomad {
+    height: 250px;
+    overflow-y: auto;
+}
+.hebdomad::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+    height: 10px;
+}
+.hebdomad::-webkit-scrollbar-thumb {
+    cursor: pointer;
+    border-radius: 5px;
+    background: rgba(0,0,0,.25);
+}
+.hebdomad::-webkit-scrollbar-track {
+    background: rgba(0,0,0,.1);
+    border-radius: 7px;
+}
+.all-data-shadow {
+    line-height: 45px;
+    padding: 0px 40px 0px 90px;
+}
+
+.all-data-shadow:nth-child(1) {
+    box-shadow: rgba(134, 127, 127, 0.3) 0 1px 2px,rgba(134, 127, 127, 0.3) 0 -1px 2px;
+}
+.all-data-shadow:not(:nth-child(1)) {
+    box-shadow: rgba(134, 127, 127, 0.3) 0 1px 2px;
+}
+
+.warn-message {
+    padding-left: 48px;
+    margin-top: 50px;
+    width: 60%;
+    border: 1px solid #8aa5c1;
+    border-radius: 5px;
+    line-height: 40px;
+    letter-spacing: 3px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #7bb7ed;
+    background-image: url('../../assets/img/alarm icon.png');
+    background-repeat: no-repeat;
+    background-size: 18px;
+    background-position: 15px center;
+}
