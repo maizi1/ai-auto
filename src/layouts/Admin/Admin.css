@@ -1,0 +1,25 @@
+.Admin {
+    min-height: 100vh;
+    background-image: linear-gradient(#9A54EB 0,#60B2EB 100%);
+}
+.Admin .main {
+    margin-left: 192px;
+    padding: 0px 21px;
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+
+.Admin .main::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+    height: 10px;
+}
+.Admin .main::-webkit-scrollbar-thumb {
+    cursor: pointer;
+    border-radius: 5px;
+    background: rgba(0,0,0,.25);
+}
+.Admin .main::-webkit-scrollbar-track {
+    background: rgba(0,0,0,.1);
+    border-radius: 7px;
+}
