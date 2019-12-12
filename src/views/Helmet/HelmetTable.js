@@ -130,7 +130,6 @@ export default class HelmetTable extends React.Component {
                 }
                 if (key === 'startAt') {
                     if (!inputs[key]) {
-                        is = true
                         continue
                     }
                     is = new Date(val.time).getTime() >= inputs[key]
@@ -138,7 +137,6 @@ export default class HelmetTable extends React.Component {
                 }
                 if (key === 'endAt') {
                     if (!inputs[key]) {
-                        is = true
                         continue
                     }
                     is = new Date(val.time).getTime() < inputs[key]
@@ -146,7 +144,6 @@ export default class HelmetTable extends React.Component {
                 }
                 if (key === 'state') {
                     if (inputs[key] === '全部') {
-                        is = true
                         continue
                     }
                     if (val[key] === '是') {

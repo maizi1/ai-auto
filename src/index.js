@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 

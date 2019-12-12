@@ -137,7 +137,6 @@ export default class HighTossActTable extends React.Component {
                 }
                 if (key === 'startAt') {
                     if (!inputs[key]) {
-                        is = true
                         continue
                     }
                     is = new Date(val.time).getTime() >= inputs[key]
@@ -145,7 +144,6 @@ export default class HighTossActTable extends React.Component {
                 }
                 if (key === 'endAt') {
                     if (!inputs[key]) {
-                        is = true
                         continue
                     }
                     is = new Date(val.time).getTime() < inputs[key]
