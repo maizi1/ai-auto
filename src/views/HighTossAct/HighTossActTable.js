@@ -1,38 +1,44 @@
-import React from 'react'
-import { Table, Modal, Card, Button } from 'antd'
-import InputHeader from 'components/Header/InputHeader.js'
+import React from 'react';
+import { Table, Modal, Card, Button, Icon } from 'antd';
+import InputHeader from 'components/Header/InputHeader.js';
+import Amap from 'components/Amap/Amap.js';
 
-import data from './Data.js'
+import data from './Data.js';
 
-const { Meta } = Card
 const selectData = (() => {
     const obj = {
         area: { 全部: '' },
         building: { 全部: '' },
         room: { 全部: '' },
-    }
+    };
     data.forEach(val => {
         for (let key in obj) {
-            obj[key][val[key]] = ''
+            obj[key][val[key]] = '';
         }
-    })
+    });
     obj.cell = {
         全部: '',
         '3单元': '',
         '4单元': '',
-    }
-    return obj
-})()
+    };
+    return obj;
+})();
 
 const selectInput = [
     { label: '区域', key: 'area' },
     { label: '栋', key: 'building' },
     { label: '单元', key: 'cell' },
     { label: '房间', key: 'room' },
-]
+];
 
 export default class HighTossActTable extends React.Component {
-    state = { data, imgsrc: '', visible: false, imgTitle: '' }
+    state = {
+        data,
+        imgsrc: '',
+        visible: false,
+        imgTitle: '',
+        amapVisible: false,
+    };
     columns = [
         {
             title: 'ID',
@@ -65,103 +71,121 @@ export default class HighTossActTable extends React.Component {
             dataIndex: 'room',
         },
         {
-            title: '视频',
+            title: '操作',
             dataIndex: 'video',
+            align: 'center',
             render: (text, row) => {
                 if (!text) {
-                    return ''
+                    return '';
                 }
                 return (
-                    <Button
-                        type="primary"
-                        onClick={() => {
-                            const title = `${row.area}  ${row.building}栋  3单元  ${row.room}`
-                            this.showModal(text, title)
-                        }}
-                    >
-                        视频
-                    </Button>
-                )
+                    <>
+                        <Button type="link" ghostton onClick={this.showAmap}>
+                            <Icon
+                                type="environment"
+                                theme="twoTone"
+                                style={{
+                                    fontSize: 22,
+                                    verticalAlign: 'text-top',
+                                }}
+                            />
+                        </Button>
+                        <Button
+                            type="primary"
+                            style={{ marginLeft: 18 }}
+                            onClick={() => {
+                                const title = `${row.area}  ${row.building}栋  3单元  ${row.room}`;
+                                this.showModal(text, title);
+                            }}
+                        >
+                            视频
+                        </Button>
+                    </>
+                );
             },
         },
-    ]
+    ];
+    showAmap = () => {
+        this.setState({ amapVisible: true });
+    };
+    CancelAmap = () => {
+        this.setState({ amapVisible: false });
+    };
     showModal = (imgsrc, imgTitle) => {
         this.setState({
             visible: true,
             imgsrc,
             imgTitle,
-        })
-    }
+        });
+    };
 
     handleCancel = e => {
         this.setState({
             visible: false,
-        })
-    }
+        });
+    };
     selectChange = inputs => {
         inputs = (() => {
-            const obj = {}
+            const obj = {};
             for (let key in inputs) {
                 if (inputs[key] !== undefined) {
                     if (key === 'startAt' && inputs[key]) {
-                        const time = inputs[key]._d
+                        const time = inputs[key]._d;
                         obj[key] = new Date(
                             time.getFullYear(),
                             time.getMonth(),
                             time.getDate()
-                        ).getTime()
-                        continue
+                        ).getTime();
+                        continue;
                     }
                     if (key === 'endAt' && inputs[key]) {
-                        const time = inputs[key]._d
+                        const time = inputs[key]._d;
                         obj[key] =
                             new Date(
                                 time.getFullYear(),
                                 time.getMonth(),
                                 time.getDate()
                             ).getTime() +
-                            (3600000 * 24 - 1)
-                        continue
+                            (3600000 * 24 - 1);
+                        continue;
                     }
-                    obj[key] = inputs[key]
+                    obj[key] = inputs[key];
                 }
             }
-            return obj
-        })()
+            return obj;
+        })();
         const newData = data.filter(val => {
-            let is = true
+            let is = true;
 
             for (let key in inputs) {
                 if (is === false) {
-                    return false
+                    return false;
                 }
                 if (key === 'startAt') {
                     if (!inputs[key]) {
-                        is = true
-                        continue
+                        continue;
                     }
-                    is = new Date(val.time).getTime() >= inputs[key]
-                    continue
+                    is = new Date(val.time).getTime() >= inputs[key];
+                    continue;
                 }
                 if (key === 'endAt') {
                     if (!inputs[key]) {
-                        is = true
-                        continue
+                        continue;
                     }
-                    is = new Date(val.time).getTime() < inputs[key]
-                    continue
+                    is = new Date(val.time).getTime() < inputs[key];
+                    continue;
                 }
                 if (key === 'cell') {
-                    is = '3单元' === inputs[key] || inputs[key] === '全部'
-                    continue
+                    is = '3单元' === inputs[key] || inputs[key] === '全部';
+                    continue;
                 }
-                is = val[key] === inputs[key] || inputs[key] === '全部'
+                is = val[key] === inputs[key] || inputs[key] === '全部';
             }
-            return is
-        })
+            return is;
+        });
 
-        this.setState({ data: newData })
-    }
+        this.setState({ data: newData });
+    };
     render() {
         return (
             <>
@@ -197,7 +221,14 @@ export default class HighTossActTable extends React.Component {
                         }
                     />
                 </Modal>
+                <Amap
+                    title="位置"
+                    visible={this.state.amapVisible}
+                    centered
+                    footer={null}
+                    onCancel={this.CancelAmap}
+                />
             </>
-        )
+        );
     }
 }

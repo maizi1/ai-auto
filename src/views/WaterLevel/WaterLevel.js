@@ -59,7 +59,6 @@ const buildingResult = (function() {
         obj[key].data.forEach(val => {
             const date = new Date(val)
             const time = date.getTime()
-            console.log(val)
             if (
                 time < hebdomad - 1000 * 3600 * 24 * obj[key].thisWeek &&
                 time >
@@ -98,7 +97,6 @@ const buildingResult = (function() {
     arr = arr.filter(val => {
         return val.thisWeek !== 0
     })
-    console.log(arr)
     return arr.sort((a, b) => {
         return b.thisWeek - a.thisWeek
     })

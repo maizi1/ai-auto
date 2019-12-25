@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, DatePicker, TimePicker, Select, Col } from 'antd';
+import { Form, DatePicker, Select } from 'antd';
 import './InputHeader.css'
 
 const { Option } = Select;

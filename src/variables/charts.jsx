@@ -103,20 +103,12 @@ Chart.elements.Rectangle.prototype.draw = function() {
     ctx.moveTo(corner[0], corner[1])
 
     for (var i = 1; i < 4; i++) {
-        corner = cornerAt(i)
-        let nextCornerId = i + 1
-        if (nextCornerId === 4) {
-            nextCornerId = 0
-        }
-
-        // let nextCorner = cornerAt(nextCornerId);
-
         let width = corners[2][0] - corners[1][0]
         let height = corners[0][1] - corners[1][1]
         let x = corners[1][0]
         let y = corners[1][1]
         // eslint-disable-next-line
-        var radius: any = cornerRadius
+        radius= cornerRadius
 
         // Fix radius being too large
         if (radius > height / 2) {

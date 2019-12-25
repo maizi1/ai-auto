@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/es/locale/zh_CN';
 
@@ -8,6 +8,7 @@ import 'assets/css/index.css'
 import * as serviceWorker from 'serviceWorker'
 import AdminLayout from 'layouts/Admin/Admin.js'
 import Home from 'views/Home/Home.js'
+import Amap from './components/Amap/Amap'
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={props => <Component {...props} />} />
@@ -18,6 +19,7 @@ ReactDOM.render(
         <BrowserRouter>
             <Switch>
                 <PrivateRoute path="/admin" component={AdminLayout} />
+                <Route path="/map" render={props => <Amap {...props} />} />
                 <Route path="/" render={props => <Home {...props} />} />
             </Switch>
         </BrowserRouter>
