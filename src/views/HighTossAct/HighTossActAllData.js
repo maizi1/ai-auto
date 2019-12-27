@@ -22,6 +22,14 @@ const capsNumber = [
     '十一',
     '十二',
 ]
+const DAY = 1000 * 3600 * 24;
+const date = new Date();
+const yyMMdd = {
+    yy: date.getFullYear(),
+    MM: date.getMonth(),
+    dd: date.getDate()
+}
+
 const buildingResult = (function () {
     const obj = {}
     let arr = []
@@ -38,16 +46,15 @@ const buildingResult = (function () {
         obj[building].data.push(data[index].time);
     })
 
-    const date = new Date();
-    const hebdomad = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59, 999).getTime()
+    const hebdomad = new Date(yyMMdd.yy, yyMMdd.MM, yyMMdd.dd, 23, 59, 59, 999).getTime()
     const whatDay = date.getDay() === 0 ? 7 : date.getDay()
     for (const key in obj) {
         obj[key].key = key
         obj[key].data.forEach(val => {
             const time = new Date(val).getTime()
-            if (time < hebdomad && time > hebdomad - (1000 * 3600 * 24 * whatDay)) {
+            if (time < hebdomad && time > hebdomad - (DAY * whatDay)) {
                 obj[key].thisWeek += 1
-            } else if (time <= hebdomad - (1000 * 3600 * 24 * whatDay) && time > hebdomad - (1000 * 3600 * 24 * (whatDay + 7))) {
+            } else if (time <= hebdomad - (DAY * whatDay) && time > hebdomad - (DAY * (whatDay + 7))) {
                 obj[key].lastWeek += 1
             }
         })
@@ -62,7 +69,13 @@ const buildingResult = (function () {
 })()
 const barData = {
     month: () => ({
-        labels: Array.from({ length: 12 }, (x, y) => capsNumber[y] + '月'),
+        labels: Array.from({ length: 12 }, (x, y) => {
+            let month = yyMMdd.MM + y + 1;
+            if (month >= 12) {
+                month = month - 12;
+            }
+            return capsNumber[month] + '月'
+        }),
         datasets: [
             {
                 label: '抛物',
@@ -112,7 +125,7 @@ export default class HighTossActAllData extends React.Component {
             dd: 0,
             M: 0,
         }
-        const date = new Date()
+        const date = new Date(2020,1,20)
         const hebdomad = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59, 999).getTime()
         const yy = date.getFullYear()
         const mm = date.getMonth()
@@ -130,7 +143,7 @@ export default class HighTossActAllData extends React.Component {
             if (_time.getDate() === dd) {
                 obj.dd++
             }
-            if (ms < hebdomad && ms > hebdomad - (1000 * 3600 * 24 * M)) {
+            if (ms < hebdomad && ms > hebdomad - (DAY * M)) {
                 obj.M++
             }
         })

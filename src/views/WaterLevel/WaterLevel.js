@@ -22,6 +22,14 @@ const capsNumber = [
     '十一',
     '十二',
 ]
+const DAY = 1000 * 3600 * 24
+const date = new Date()
+const yyMMdd = {
+    yy: date.getFullYear(),
+    MM: date.getMonth(),
+    dd: date.getDate()
+}
+
 const buildingResult = (function() {
     const obj = {}
     let arr = []
@@ -60,9 +68,9 @@ const buildingResult = (function() {
             const date = new Date(val)
             const time = date.getTime()
             if (
-                time < hebdomad - 1000 * 3600 * 24 * obj[key].thisWeek &&
+                time < hebdomad - DAY * obj[key].thisWeek &&
                 time >
-                    hebdomad - (1000 * 3600 * 24 * (obj[key].thisWeek + 1))
+                    hebdomad - (DAY * (obj[key].thisWeek + 1))
             ) {
                 console.log(date)
                 if (obj[key].thisWeek === 0) {
@@ -75,15 +83,15 @@ const buildingResult = (function() {
                 obj[key].isStart = false
                 obj[key].isLastStart = true
                 obj[key].lastWeek += 1
-                obj[key].lastWeekTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59, 999).getTime()
+                obj[key].lastWeekTime = new Date(yyMMdd.yy, yyMMdd.MM, yyMMdd.dd, 23, 59, 59, 999).getTime()
             } else {
                 if (obj[key].isLastStart === true) {
                     if (
                         time <
-                        obj[key].lastWeekTime - 1000 * 3600 * 24 * obj[key].lastWeek &&
+                        obj[key].lastWeekTime - DAY * obj[key].lastWeek &&
                         time >=
                         obj[key].lastWeekTime -
-                                (1000 * 3600 * 24 * (obj[key].lastWeek + 1) - 1)
+                                (DAY * (obj[key].lastWeek + 1) - 1)
                     ) {
                         obj[key].lastWeek += 1
                     } else {
@@ -103,7 +111,13 @@ const buildingResult = (function() {
 })()
 const barData = {
     month: () => ({
-        labels: Array.from({ length: 12 }, (x, y) => capsNumber[y] + '月'),
+        labels: Array.from({ length: 12 }, (x, y) => {
+            let month = yyMMdd.MM + y + 1;
+            if (month >= 12) {
+                month = month - 12;
+            }
+            return capsNumber[month] + '月'
+        }),
         datasets: [
             {
                 backgroundColor: '#744dfe',
@@ -172,7 +186,7 @@ export default class WaterLevel extends React.Component {
             if (_time.getDate() === dd) {
                 obj.dd++
             }
-            if (ms < hebdomad && ms > hebdomad - (1000 * 3600 * 24 * M)) {
+            if (ms < hebdomad && ms > hebdomad - (DAY * M)) {
                 obj.M++
             }
         })

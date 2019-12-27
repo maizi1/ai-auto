@@ -26,13 +26,12 @@ class TimeRelatedForm extends React.Component {
         };
         return (
             <Form {...formItemLayout} onChange={this.handleSubmit}>
-                <Form.Item label="起始日期">
+                {!this.props.hide && (<><Form.Item label="起始日期">
                     {getFieldDecorator('startAt')(<DatePicker />)}
                 </Form.Item>
-                {/* <Col span={24}> */}
                 <Form.Item label="结束日期" >
                     {getFieldDecorator('endAt')(<DatePicker />)}
-                </Form.Item>
+                </Form.Item></>)}
                 {/* </Col>     */}
                 {this.props.selectInput.map((val, index) => {
                     return (
