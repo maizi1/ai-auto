@@ -23,7 +23,8 @@ const capsNumber = [
     '十二',
 ]
 const DAY = 1000 * 3600 * 24;
-const date = new Date();
+const date = new Date('2020-1-9');
+console.log(date)
 const yyMMdd = {
     yy: date.getFullYear(),
     MM: date.getMonth(),

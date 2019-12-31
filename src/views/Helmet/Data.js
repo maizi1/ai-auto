@@ -1,17 +1,23 @@
 const rawData = `id,time,name,state,img
-1,2019/10/18 15:25,高晟,是,5f6c5d52c7e99030260a3cbd94fd07b.png
-2,2019/10/19 15:25,未识别人员,否,8ad2d968548d4cf01036e1833fe99ed.png
-3,2019/10/20 15:25,李然,是,4e5de42a47d7996cd1ee44360ed78eb.png
-4,2019/10/21 15:25,未识别人员,否,8ad2d968548d4cf01036e1833fe99ed.png
-5,2019/10/22 15:25,窦廉,否,8ad2d968548d4cf01036e1833fe99ed.png
-6,2019/10/23 15:25,迟范,否,8ad2d968548d4cf01036e1833fe99ed.png
-7,2019/10/24 15:25,顾理,否,8ad2d968548d4cf01036e1833fe99ed.png
-8,2019/10/25 15:25,方楼,否,8ad2d968548d4cf01036e1833fe99ed.png`
+8,2020/1/8,访客,否,helmet9.png
+1,2020/1/8,员工,是,helmet5.png
+2,2020/1/7,未识别人员,否,helmet6.png
+2,2020/1/6,未识别人员,否,helmet6.png
+3,2020/1/6,员工,是,helmet5.png
+4,2020/1/5,未识别人员,否,helmet7.png
+5,2020/1/4,访客,否,helmet9.png
+3,2020/1/4,员工,是,helmet5.png
+6,2020/1/3,访客,否,helmet9.png
+2,2020/1/2,未识别人员,否,helmet6.png
+3,2020/1/2,员工,是,helmet5.png
+8,2020/1/2,访客,否,helmet9.png
+8,2020/1/1,未识别人员,否,helmet8.png`
 
 const data = (() => {
     const arr = []
     const strArr = rawData.split('\n')
     let keys
+    let id = 1
     strArr.forEach((val, index) => {
         if (index === 0) {
             keys = val.split(',')
@@ -20,12 +26,16 @@ const data = (() => {
         const obj = {}
         const tempArr = val.split(',')
         tempArr.forEach((val, index) => {
+            if (keys[index] === 'id') {
+                obj[keys[index]] = id++
+                return
+            }
             obj[keys[index]] = val
         })
         arr.push(obj)
     })
     
-    return arr
+    return arr.sort((a, b) => new Date(b.time).getTime() -  new Date(a.time).getTime())
 })()
 
 export default data

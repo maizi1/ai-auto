@@ -71,7 +71,7 @@ export default class HelmetTable extends React.Component {
                     <Button
                         type="primary"
                         onClick={() => {
-                            const title = `姓名：${row.name} 状态：${row.state === '是' ? '合规' : '违规'}`
+                            const title = `身份：${row.name} 状态：${row.state === '是' ? '合规' : '违规'}`
                             this.showModal(text, title)
                         }}
                     >
@@ -188,7 +188,7 @@ export default class HelmetTable extends React.Component {
                             <img
                                 onLoad={this.imgLoad}
                                 alt="example"
-                                style={{objectFit: 'none'}}
+                                style={{objectFit: 'cover'}}
                                 src={this.state.imgsrc}
                             />
                         }

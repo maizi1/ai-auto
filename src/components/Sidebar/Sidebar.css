@@ -3,3 +3,18 @@
     padding-left: 29px;
     background: url('../../assets/img/list-icon.png') no-repeat left center / 18px 24px;
 }
+
+.ant-menu::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 4px;
+    height: 10px;
+}
+.ant-menu::-webkit-scrollbar-thumb {
+    cursor: pointer;
+    border-radius: 5px;
+    background: rgba(0,0,0,.25);
+}
+.ant-menu::-webkit-scrollbar-track {
+    background: rgba(0,0,0,.3);
+    border-radius: 7px;
+}

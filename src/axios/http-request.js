@@ -24,13 +24,14 @@ export default {
         );
     },
 
-    getDeviceDataHistory(headers) {
+    getDeviceDataHistory(headers, page = 1) {
         headers = { ...headers, 'Content-Type': 'application/json' };
         return post(
             '/device-v001/getDeviceDataHistory',
             {
                 deviceKey: headers.deviceKey,
-                pageSize: 1,
+                pageNo: page,
+                pageSize: 10,
             },
             { headers }
         );

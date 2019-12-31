@@ -23,7 +23,7 @@ const capsNumber = [
     '十二',
 ]
 const DAY = 1000 * 3600 * 24
-const date = new Date()
+const date = new Date('2020-1-9')
 const yyMMdd = {
     yy: date.getFullYear(),
     MM: date.getMonth(),
@@ -45,12 +45,11 @@ const buildingResult = (function() {
                 data: [],
             }
         }
-        if (data[index].value > 150) {
+        if (data[index].value === '低' || data[index].value === '高') {
             obj[point].data.push(data[index].time)
         }
     })
 
-    const date = new Date()
     const hebdomad = new Date(
         date.getFullYear(),
         date.getMonth(),
@@ -310,7 +309,7 @@ export default class WaterLevel extends React.Component {
                                                 <span
                                                     style={{ marginRight: 50 }}
                                                 >
-                                                    {thisWeek}
+                                                    {thisWeek}天
                                                 </span>
                                                 <Icon
                                                     type={arrow}

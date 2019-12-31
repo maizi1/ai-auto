@@ -14,9 +14,6 @@ import UserTable from 'views/User/UserTable.js'
 import SystemLogQuery from 'views/System/LogTable.js'
 import Database from 'views/System/Database.js'
 
-
-
-
 const routes = [
     {
         sideName: '高空抛物',
@@ -66,18 +63,18 @@ const routes = [
         sideName: '系统管理',
         children: [
             {
-                path: '/admin/SystemDatabase',
-                sideName: '数据库管理',
+                path: '/admin/UserTable',
+                sideName: '用户管理',
             },
             {
                 path: '/admin/SystemLogQuery',
                 sideName: '日志查询',
             },
+            {
+                path: '/admin/SystemDatabase',
+                sideName: '数据库管理',
+            },
         ],
-    },
-    {
-        path: '/admin/UserTable',
-        sideName: '用户管理',
     },
 ]
 
@@ -114,7 +111,7 @@ function Admin({ location }) {
 
     return (
         <div className="Admin">
-            <Header title={keyAndTitle.title} />
+            <Header title={keyAndTitle.title} pathname={pathname} />
             <Sidebar path={routes} menuKey={keyAndTitle} />
             <main className="main">
                 <Switch>
@@ -136,10 +133,7 @@ function Admin({ location }) {
                         path="/admin/FacilityTable"
                         render={props => <FacilityTable {...props} />}
                     />
-                    <Route
-                        path="/admin/SystemDatabase"
-                        render={props => <Database {...props} />}
-                    />
+                    <Route path="/admin/SystemDatabase" render={props => <Database {...props} />} />
                     <Route
                         path="/admin/SystemLogQuery"
                         render={props => <SystemLogQuery {...props} />}
