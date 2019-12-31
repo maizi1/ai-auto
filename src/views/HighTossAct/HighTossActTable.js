@@ -10,25 +10,20 @@ const selectData = (() => {
         area: { 全部: '' },
         building: { 全部: '' },
         room: { 全部: '' },
+        cell: { 全部: '' },
     };
     data.forEach(val => {
         for (let key in obj) {
             obj[key][val[key]] = '';
         }
     });
-    obj.cell = {
-        全部: '',
-        '3单元': '',
-        '4单元': '',
-    };
     return obj;
 })();
 
 const selectInput = [
     { label: '区域', key: 'area' },
     { label: '栋', key: 'building' },
-    { label: '单元', key: 'cell' },
-    { label: '房间', key: 'room' },
+    { label: '层', key: 'cell' }
 ];
 
 export default class HighTossActTable extends React.Component {
@@ -61,12 +56,7 @@ export default class HighTossActTable extends React.Component {
             dataIndex: 'building',
         },
         {
-            title: '单元',
-            key: 'action',
-            render: () => '3单元',
-        },
-        {
-            title: '房间',
+            title: '楼层',
             key: 'room',
             dataIndex: 'room',
         },
@@ -80,7 +70,7 @@ export default class HighTossActTable extends React.Component {
                 }
                 return (
                     <>
-                        <Button type="link" ghostton onClick={this.showAmap}>
+                        <Button type="link" ghost onClick={this.showAmap}>
                             <Icon
                                 type="environment"
                                 theme="twoTone"
@@ -175,10 +165,7 @@ export default class HighTossActTable extends React.Component {
                     is = new Date(val.time).getTime() < inputs[key];
                     continue;
                 }
-                if (key === 'cell') {
-                    is = '3单元' === inputs[key] || inputs[key] === '全部';
-                    continue;
-                }
+                
                 is = val[key] === inputs[key] || inputs[key] === '全部';
             }
             return is;

@@ -4,25 +4,7 @@ import InputHeader from 'components/Header/InputHeader.js'
 import data from './Data.js'
 
 const selectData = (() => {
-    // const obj = {
-    //     area: {'全部':''},
-    //     point: {'全部':''},
-    //     river: {'全部':''},
-    // }
-    // data.forEach(val => {
-    //     for (let key in obj) {
-    //         obj[key][val[key]] = ''
-    //     }
-    // })
-    // obj.warn = {
-    //     '全部': '',
-    //     '枯水': '',
-    //     '少量': '',
-    //     '橙色警戒': '',
-    //     '红色警戒': '',
-    //     '溢出': '',
-    // }
-    return {
+    const obj = {
         jurisdiction: {
             全部: '',
             系统: '',
@@ -30,8 +12,6 @@ const selectData = (() => {
         },
         name: {
             全部: '',
-            系统: '',
-            一般: '',
         },
         group: {
             全部: '',
@@ -40,8 +20,11 @@ const selectData = (() => {
             安全及身份识别: '',
             设备检测: '',
         },
-
     }
+    data.forEach(val => {
+            obj['name'][val['name']] = ''
+    })
+    return obj
 })()
 
 const selectInput = [
@@ -66,15 +49,19 @@ export default class HelmetTable extends React.Component {
             dataIndex: 'jurisdiction',
         },
         {
-            title: '分组',
+            title: '地域',
             dataIndex: 'area',
+        },
+        {
+            title: '分组',
+            dataIndex: 'group',
         },
         {
             title: '操作',
             dataIndex: 'img',
             render: (text, row) => {
                 if (!text) {
-                    return '操作'
+                    return <span style={{ color: '#1890ff' }}>设置</span>
                 }
                 return (
                     <Button
@@ -207,9 +194,8 @@ export default class HelmetTable extends React.Component {
                         is = '安全及身份识别' === inputs[key]
                         continue
                     }
-                    
-                    
                 }
+                is = val[key] === inputs[key] || inputs[key] === '全部';
             }
             return is
         })
@@ -220,7 +206,12 @@ export default class HelmetTable extends React.Component {
         return (
             <>
                 <div className="HelmetTable-input">
-                    <InputHeader {...selectData} selectInput={selectInput} hide={true} fn={this.selectChange} />
+                    <InputHeader
+                        {...selectData}
+                        selectInput={selectInput}
+                        hide={true}
+                        fn={this.selectChange}
+                    />
                 </div>
                 <Table
                     rowKey={record => record.id}

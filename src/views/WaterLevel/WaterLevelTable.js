@@ -17,11 +17,9 @@ const selectData = (() => {
     })
     obj.warn = {
         全部: '',
-        枯水: '',
-        少量: '',
-        橙色警戒: '',
-        红色警戒: '',
-        溢出: '',
+        安全: '',
+        偏低预警: '',
+        超高预警: '',
     }
     return obj
 })()
@@ -57,28 +55,24 @@ export default class HighTossActTable extends React.Component {
         {
             title: '监测点',
             dataIndex: 'point',
-            render: text => text + '号检测点',
+            render: text => text,
         },
         {
             title: '水位',
             dataIndex: 'value',
         },
         {
-            title: '警戒级别',
+            title: '告警状态',
             render: ({ value }) => {
-                if (value <= 100) {
-                    return <Tag color="lime">枯水</Tag>
+                if (value === '低') {
+                    return <Tag color="lime">偏低预警</Tag>
                 }
-                if (value <= 150 && value > 100) {
-                    return <Tag color="cyan">少量</Tag>
+                if (value === '中') {
+                    return <Tag color="cyan">安全</Tag>
                 }
-                if (value <= 200 && value > 150) {
-                    return <Tag color="#ffab00">橙色警戒</Tag>
+                if (value === '高') {
+                    return <Tag color="#ffab00">超高预警</Tag>
                 }
-                if (value <= 250 && value > 200) {
-                    return <Tag color="#ff0000">红色警戒</Tag>
-                }
-                return <Tag color="magenta">溢出</Tag>
             },
         },
         {
@@ -173,24 +167,16 @@ export default class HighTossActTable extends React.Component {
                     continue
                 }
                 if (key === 'warn') {
-                    if (inputs[key] === '枯水') {
-                        is = val.value <= 100
+                    if (inputs[key] === '安全') {
+                        is = val.value === '中'
                         continue
                     }
-                    if (inputs[key] === '少量') {
-                        is = val.value <= 150 && val.value > 100
+                    if (inputs[key] === '偏低预警') {
+                        is = val.value === '低'
                         continue
                     }
-                    if (inputs[key] === '橙色警戒') {
-                        is = val.value <= 200 && val.value > 150
-                        continue
-                    }
-                    if (inputs[key] === '红色警戒') {
-                        is = val.value <= 250 && val.value > 200
-                        continue
-                    }
-                    if (inputs[key] === '溢出') {
-                        is = val.value > 250
+                    if (inputs[key] === '超高预警') {
+                        is = val.value === '高'
                         continue
                     }
                     continue

@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { Modal } from 'antd';
 
-const { error: ModalError, warning } = Modal;
+const { error: ModalError } = Modal;
 
-axios.defaults.timeout = 6000;
-// axios.defaults.baseURL = 'https://api.ccsiot.com'
+axios.defaults.timeout = 10000;
+axios.defaults.baseURL = 'http://irs-nginx.ccsyun.club'
 
 axios.interceptors.response.use(
     response => {
@@ -27,8 +27,6 @@ axios.interceptors.response.use(
                 default:
                     ModalError({ content: '未捕获的错误 !!!' });
             }
-        } else {
-            warning({ content: '网络连接超时 !!!' });
         }
 
         return Promise.resolve(null);

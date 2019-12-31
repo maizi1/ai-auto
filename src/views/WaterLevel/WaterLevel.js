@@ -8,26 +8,13 @@ import './WaterLevel.css'
 import { chartOptions, parseOptions, chartExample2 } from 'variables/charts.jsx'
 import data from './Data.js'
 
-const capsNumber = [
-    '一',
-    '二',
-    '三',
-    '四',
-    '五',
-    '六',
-    '七',
-    '八',
-    '九',
-    '十',
-    '十一',
-    '十二',
-]
+const capsNumber = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二']
 const DAY = 1000 * 3600 * 24
-const date = new Date()
+const date = new Date('2020-1-8')
 const yyMMdd = {
     yy: date.getFullYear(),
     MM: date.getMonth(),
-    dd: date.getDate()
+    dd: date.getDate(),
 }
 
 const buildingResult = (function() {
@@ -45,12 +32,11 @@ const buildingResult = (function() {
                 data: [],
             }
         }
-        if (data[index].value > 150) {
+        if (data[index].value === '低' || data[index].value === '高') {
             obj[point].data.push(data[index].time)
         }
     })
 
-    const date = new Date()
     const hebdomad = new Date(
         date.getFullYear(),
         date.getMonth(),
@@ -67,12 +53,7 @@ const buildingResult = (function() {
         obj[key].data.forEach(val => {
             const date = new Date(val)
             const time = date.getTime()
-            if (
-                time < hebdomad - DAY * obj[key].thisWeek &&
-                time >
-                    hebdomad - (DAY * (obj[key].thisWeek + 1))
-            ) {
-                console.log(date)
+            if (time < hebdomad - DAY && time > hebdomad - DAY * 7) {
                 if (obj[key].thisWeek === 0) {
                     obj[key].isStart = true
                 }
@@ -83,15 +64,20 @@ const buildingResult = (function() {
                 obj[key].isStart = false
                 obj[key].isLastStart = true
                 obj[key].lastWeek += 1
-                obj[key].lastWeekTime = new Date(yyMMdd.yy, yyMMdd.MM, yyMMdd.dd, 23, 59, 59, 999).getTime()
+                obj[key].lastWeekTime = new Date(
+                    yyMMdd.yy,
+                    yyMMdd.MM,
+                    yyMMdd.dd,
+                    23,
+                    59,
+                    59,
+                    999
+                ).getTime()
             } else {
                 if (obj[key].isLastStart === true) {
                     if (
-                        time <
-                        obj[key].lastWeekTime - DAY * obj[key].lastWeek &&
-                        time >=
-                        obj[key].lastWeekTime -
-                                (DAY * (obj[key].lastWeek + 1) - 1)
+                        time < obj[key].lastWeekTime - DAY * obj[key].lastWeek &&
+                        time >= obj[key].lastWeekTime - (DAY * (obj[key].lastWeek + 1) - 1)
                     ) {
                         obj[key].lastWeek += 1
                     } else {
@@ -112,9 +98,9 @@ const buildingResult = (function() {
 const barData = {
     month: () => ({
         labels: Array.from({ length: 12 }, (x, y) => {
-            let month = yyMMdd.MM + y + 1;
+            let month = yyMMdd.MM + y + 1
             if (month >= 12) {
-                month = month - 12;
+                month = month - 12
             }
             return capsNumber[month] + '月'
         }),
@@ -133,10 +119,7 @@ const barData = {
         ],
     }),
     quarter: () => ({
-        labels: Array.from(
-            { length: 4 },
-            (x, y) => '第' + capsNumber[y] + '季度'
-        ),
+        labels: Array.from({ length: 4 }, (x, y) => '第' + capsNumber[y] + '季度'),
         datasets: [
             {
                 backgroundColor: '#744dfe',
@@ -144,9 +127,7 @@ const barData = {
                 data: (function() {
                     const arr = Array.from({ length: 4 }, x => 0)
                     data.forEach(val => {
-                        const quarter = Math.floor(
-                            new Date(val.time).getMonth() / 3
-                        )
+                        const quarter = Math.floor(new Date(val.time).getMonth() / 3)
                         arr[quarter] += 1
                     })
                     return arr
@@ -161,7 +142,7 @@ export default class WaterLevel extends React.Component {
         warning: buildingResult[0],
     }
 
-    statistics = (function () {
+    statistics = (function() {
         const obj = {
             yy: 0,
             mm: 0,
@@ -169,7 +150,15 @@ export default class WaterLevel extends React.Component {
             M: 0,
         }
         const date = new Date()
-        const hebdomad = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59, 999).getTime()
+        const hebdomad = new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            23,
+            59,
+            59,
+            999
+        ).getTime()
         const yy = date.getFullYear()
         const mm = date.getMonth()
         const dd = date.getDate()
@@ -186,7 +175,7 @@ export default class WaterLevel extends React.Component {
             if (_time.getDate() === dd) {
                 obj.dd++
             }
-            if (ms < hebdomad && ms > hebdomad - (DAY * M)) {
+            if (ms < hebdomad && ms > hebdomad - DAY * M) {
                 obj.M++
             }
         })
@@ -243,9 +232,7 @@ export default class WaterLevel extends React.Component {
                                                 : 'Bar-card-btn'
                                         }
                                         style={{ marginRight: 12 }}
-                                        onClick={() =>
-                                            this.toggleBarDataView('month')
-                                        }
+                                        onClick={() => this.toggleBarDataView('month')}
                                     >
                                         按月份
                                     </Button>
@@ -255,9 +242,7 @@ export default class WaterLevel extends React.Component {
                                                 ? 'Bar-card-btn activity'
                                                 : 'Bar-card-btn'
                                         }
-                                        onClick={() =>
-                                            this.toggleBarDataView('quarter')
-                                        }
+                                        onClick={() => this.toggleBarDataView('quarter')}
                                     >
                                         按季度
                                     </Button>
@@ -273,10 +258,7 @@ export default class WaterLevel extends React.Component {
                         </div>
                     </Col>
                     <Col span={12}>
-                        <div
-                            className="Bar-card"
-                            style={{ overflow: 'hidden' }}
-                        >
+                        <div className="Bar-card" style={{ overflow: 'hidden' }}>
                             <div
                                 className="f-clear"
                                 style={{
@@ -286,10 +268,7 @@ export default class WaterLevel extends React.Component {
                             >
                                 <span>连续警戒水位天数</span>
                             </div>
-                            <div
-                                className="hebdomad"
-                                style={{ padding: '20px 0' }}
-                            >
+                            <div className="hebdomad" style={{ padding: '20px 0' }}>
                                 {buildingResult.map((obj, index) => {
                                     const { thisWeek, lastWeek } = obj
                                     let arrow, color
@@ -301,16 +280,11 @@ export default class WaterLevel extends React.Component {
                                         color = '#edb9bb'
                                     }
                                     return (
-                                        <div
-                                            key={index}
-                                            className="all-data-shadow"
-                                        >
+                                        <div key={index} className="all-data-shadow">
                                             <span>{obj.key}号监测点</span>
                                             <div style={{ float: 'right' }}>
-                                                <span
-                                                    style={{ marginRight: 50 }}
-                                                >
-                                                    {thisWeek}
+                                                <span style={{ marginRight: 50 }}>
+                                                    {thisWeek}天
                                                 </span>
                                                 <Icon
                                                     type={arrow}

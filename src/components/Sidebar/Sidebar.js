@@ -6,13 +6,21 @@ import './Sidebar.css'
 const { SubMenu } = Menu
 
 export default class Sidebar extends React.Component {
-
+    style = {
+        width: 180,
+        position: 'fixed',
+        left: 12,
+        top: 99,
+        bottom: 10,
+        overflowY: 'auto',
+        overflowX: 'hidden'
+    }
     render() {
         const { path, menuKey } = this.props
-        const { openKey, itemKey } = menuKey;
+        const { openKey, itemKey } = menuKey
         return (
             <Menu
-                style={{ width: 180, position: 'fixed', left: 12, top: 99, bottom: 10 }}
+                style={this.style}
                 defaultSelectedKeys={[itemKey]}
                 defaultOpenKeys={[openKey]}
                 mode="inline"
