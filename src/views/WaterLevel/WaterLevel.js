@@ -149,7 +149,6 @@ export default class WaterLevel extends React.Component {
             dd: 0,
             M: 0,
         }
-        const date = new Date()
         const hebdomad = new Date(
             date.getFullYear(),
             date.getMonth(),
@@ -266,7 +265,7 @@ export default class WaterLevel extends React.Component {
                                     lineHeight: '32px',
                                 }}
                             >
-                                <span>连续警戒水位天数</span>
+                                <span>连续正常水位天数</span>
                             </div>
                             <div className="hebdomad" style={{ padding: '20px 0' }}>
                                 {buildingResult.map((obj, index) => {
@@ -302,12 +301,12 @@ export default class WaterLevel extends React.Component {
                     </Col>
                 </Row>
                 <p
-                    className="warn-message"
+                    className="warn-message green-alarm"
                     style={{
                         display: warning.thisWeek === 0 ? 'none' : 'block',
                     }}
                 >
-                    {warning.key}号监测点连续超警戒水位{warning.thisWeek}天！
+                    {warning.key}号监测点连续正常水位{warning.thisWeek}天！
                 </p>
             </>
         )

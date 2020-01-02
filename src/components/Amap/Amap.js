@@ -25,6 +25,13 @@ export default class Amap extends React.Component {
         this.getCoord()
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.visible === true) {
+            console.log(1)
+            this.getCoord()
+        }
+    }
+
     async getCoord() {
         let appId = '9bf0504ca66543428d749ffcbb08114f'
         let accessToken = cookie.get('accessToken')

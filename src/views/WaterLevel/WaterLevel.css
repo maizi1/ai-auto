@@ -65,3 +65,8 @@
     background-size: 18px;
     background-position: 15px center;
 }
+
+.green-alarm {
+    background-image: url('../../assets/img/alarm.png');
+    background-size: 26px;
+}

@@ -23,7 +23,7 @@ const capsNumber = [
     '十二',
 ]
 const DAY = 1000 * 3600 * 24;
-const date = new Date('2020-1-9');
+const date = new Date('2020-1-8');
 console.log(date)
 const yyMMdd = {
     yy: date.getFullYear(),
@@ -126,7 +126,6 @@ export default class HighTossActAllData extends React.Component {
             dd: 0,
             M: 0,
         }
-        const date = new Date(2020,1,20)
         const hebdomad = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59, 999).getTime()
         const yy = date.getFullYear()
         const mm = date.getMonth()

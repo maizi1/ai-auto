@@ -84,7 +84,7 @@ export default class HighTossActTable extends React.Component {
                             type="primary"
                             style={{ marginLeft: 18 }}
                             onClick={() => {
-                                const title = `${row.area}  ${row.building}栋  3单元  ${row.room}`;
+                                const title = `${row.area}  ${row.building}  3单元  ${row.room}`;
                                 this.showModal(text, title);
                             }}
                         >
@@ -190,6 +190,7 @@ export default class HighTossActTable extends React.Component {
                     title={this.state.imgTitle}
                     width="600px"
                     centered
+                    destroyOnClose={true}
                     footer={null}
                     visible={this.state.visible}
                     onOk={this.handleOk}

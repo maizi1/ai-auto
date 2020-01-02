@@ -6,7 +6,7 @@ import './Home.css'
 function Home() {
     return (
         <div className="Home">
-            <h1 className="title">智能识别系统</h1>
+            <h1 className="title">基于机器视觉学习算法的智能识别系统</h1>
             <div className="Card-box">
                 <Card
                     text="高空抛物"
