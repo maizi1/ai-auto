@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Tag, Modal, Card, Button } from 'antd'
+import { Table, Modal, Card, Button } from 'antd'
 import InputHeader from 'components/Header/InputHeader.js'
 import data from './Data.js'
 
@@ -40,33 +40,15 @@ export default class HelmetTable extends React.Component {
         },
         {
             title: '权限',
-            dataIndex: 'jurisdiction',
+            dataIndex: 'auth',
         },
         {
             title: '分组',
-            dataIndex: 'area',
+            dataIndex: 'group',
         },
         {
             title: '操作',
-            dataIndex: 'img',
-            render: (text, row) => {
-                if (!text) {
-                    return '操作'
-                }
-                return (
-                    <Button
-                        type="primary"
-                        onClick={() => {
-                            const title = `姓名：${row.name} 状态：${
-                                row.state === '是' ? '合规' : '违规'
-                            }`
-                            this.showModal(text, title)
-                        }}
-                    >
-                        照片
-                    </Button>
-                )
-            },
+            dataIndex: 'activity',
         },
     ]
     showModal = (imgsrc, imgTitle) => {

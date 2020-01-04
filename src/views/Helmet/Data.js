@@ -1,17 +1,13 @@
-const rawData = `id,time,name,state,img
-8,2020/1/8,访客,否,helmet9.png
-1,2020/1/8,员工,是,helmet5.png
-2,2020/1/7,未识别人员,否,helmet6.png
-2,2020/1/6,未识别人员,否,helmet6.png
-3,2020/1/6,员工,是,helmet5.png
-4,2020/1/5,未识别人员,否,helmet7.png
-5,2020/1/4,访客,否,helmet9.png
-3,2020/1/4,员工,是,helmet5.png
-6,2020/1/3,访客,否,helmet9.png
-2,2020/1/2,未识别人员,否,helmet6.png
-3,2020/1/2,员工,是,helmet5.png
-8,2020/1/2,访客,否,helmet9.png
-8,2020/1/1,未识别人员,否,helmet8.png`
+const rawData = `id,time,color,state,img
+1,2020/1/8,red,是,helmet1.png
+2,2020/1/8,yellow yellow,是,helmet2.png
+3,2020/1/7,none none none,否,helmet3.png
+4,2020/1/6,none,否,helmet4.png
+5,2020/1/6,red,是,helmet5.png
+6,2020/1/5,none,否,helmet6.png
+7,2020/1/4,none yellow blue yellow yellow none,否,helmet7.png
+8,2020/1/4,none,否,helmet8.png
+9,2020/1/3,none none none none,否,helmet9.png`
 
 const data = (() => {
     const arr = []

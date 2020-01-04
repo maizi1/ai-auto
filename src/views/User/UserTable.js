@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Tag, Modal, Card, Button } from 'antd'
+import { Table, Modal, Card, Button } from 'antd'
 import InputHeader from 'components/Header/InputHeader.js'
 import data from './Data.js'
 

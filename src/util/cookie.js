@@ -3,7 +3,7 @@ const cookie = {
         var d = new Date();
         d.setTime(d.getTime() + exsec * 1000);
         var expires = 'expires=' + d.toGMTString();
-        document.cookie = cname + '=' + cvalue + '; ' + expires;
+        document.cookie = cname + '=' + cvalue + '; ' + expires + ';path=/';
     },
     get(cname) {
         var name = cname + '=';
