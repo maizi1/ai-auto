@@ -32,9 +32,8 @@ const buildingResult = (function() {
                 data: [],
             }
         }
-        if (data[index].value === '低' || data[index].value === '高') {
-            obj[point].data.push(data[index].time)
-        }
+
+        obj[point].data.push(data[index].time)
     })
 
     const hebdomad = new Date(

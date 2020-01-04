@@ -1,3 +1,7 @@
-/* .HelmetTable-input .ant-form-item:nth-child(1), .HelmetTable-input .ant-form-item:nth-child(2){
-    width: 37.5%;
-} */
+.HelmetTable-icon {
+    position: relative;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin-right: 8;
+}

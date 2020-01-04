@@ -1,0 +1,48 @@
+.Login {
+    display: flex;
+    height: 100vh;
+    padding: 6px 6px 4px 0;
+    background: #2b2b2b;
+}
+
+.Login-left {
+    flex-grow: 1;
+    background: url(../../assets/img/index-bg2.jpg) no-repeat center / 100% 100%;
+}
+.Login-left-title {
+    margin-top: 90px;
+    text-align: center;
+    font-size: 38px;
+    letter-spacing: 3px;
+    color: #ffeb3b;
+}
+.Login-right {
+    width: 300px;
+    margin-left: 3px;
+    padding-left: 40px;
+    padding-right: 16px;
+    background: #354152;
+}
+
+.Login-right-title {
+    margin-top:90px;
+    font-size: 46px;
+    color: #fff;
+}
+
+.Login-from {
+    display: flex;
+    flex-direction: column;
+}
+
+.Login-from label {
+    margin-bottom: 8px;
+    font-size: 18px;
+    color: #fff;
+}
+
+.Login-from input {
+    width: 100%;
+    padding: 4px 8px;
+    box-sizing: border-box;
+}

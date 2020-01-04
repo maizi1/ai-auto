@@ -27,7 +27,6 @@ export default class Amap extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.visible === true) {
-            console.log(1)
             this.getCoord()
         }
     }
