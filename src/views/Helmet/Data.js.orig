@@ -1,0 +1,41 @@
+const rawData = `id,time,color,state,img
+1,2020/1/8,red,是,helmet1.png
+2,2020/1/8,yellow yellow,是,helmet2.png
+3,2020/1/7,none none none,否,helmet3.png
+4,2020/1/6,none,否,helmet4.png
+5,2020/1/6,red,是,helmet5.png
+6,2020/1/5,none,否,helmet6.png
+7,2020/1/4,none yellow blue yellow yellow none,否,helmet7.png
+<<<<<<< HEAD
+8,2020/1/4,none,否,helmet8.png
+=======
+8,2020/1/4,none,是,helmet8.png
+>>>>>>> 3e080fabd4746a443d9a5da36a760382fb779d90
+9,2020/1/3,none none none none,否,helmet9.png`
+
+const data = (() => {
+    const arr = []
+    const strArr = rawData.split('\n')
+    let keys
+    let id = 1
+    strArr.forEach((val, index) => {
+        if (index === 0) {
+            keys = val.split(',')
+            return
+        }
+        const obj = {}
+        const tempArr = val.split(',')
+        tempArr.forEach((val, index) => {
+            if (keys[index] === 'id') {
+                obj[keys[index]] = id++
+                return
+            }
+            obj[keys[index]] = val
+        })
+        arr.push(obj)
+    })
+    
+    return arr.sort((a, b) => new Date(b.time).getTime() -  new Date(a.time).getTime())
+})()
+
+export default data
