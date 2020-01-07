@@ -7,6 +7,7 @@ import cookie from '../../util/cookie'
 const { error } = Modal
 
 export default class Amap extends React.Component {
+    coordPool = []
     constructor() {
         super()
         this.toolEvents = {
@@ -15,23 +16,32 @@ export default class Amap extends React.Component {
             },
         }
         this.state = {
-            coord: { longitude: 121.45, latitude: 31.21 },
-            visible: true,
+            coord: { longitude: 104.123607, latitude: 30.620424 },
+            visible: false,
+            zoom: 4,
         }
         this.mapPlugins = ['ToolBar']
     }
 
-    componentDidMount() {
-        this.getCoord()
+    async componentDidMount() {
+        this.getCoord(this.props.callback)
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.visible === true) {
-            this.getCoord()
+        if (this.props.visible !== prevProps.visible && this.props.visible === true) {
+            if (this.props.defaultCoord) {
+                this.setState({
+                    coord: { longitude: 104.123607, latitude: 30.620424 },
+                    visible: true,
+                    zoom: 16,
+                })
+            } else {
+                this.getCoord()
+            }
         }
     }
 
-    async getCoord() {
+    async getCoord(callback) {
         let appId = '9bf0504ca66543428d749ffcbb08114f'
         let accessToken = cookie.get('accessToken')
         let auth
@@ -74,13 +84,16 @@ export default class Amap extends React.Component {
         //     deviceKey,
         //     projectId,
         // })
-        const getData = async (page) => {
-            let data = await http.getDeviceDataHistory({
-                appId,
-                accessToken,
-                deviceKey: '157734237400095861',
-                projectId: '652190966953803776',
-            },page)
+        const getData = async page => {
+            let data = await http.getDeviceDataHistory(
+                {
+                    appId,
+                    accessToken,
+                    deviceKey: '157734237400095861',
+                    projectId: '652190966953803776',
+                },
+                page
+            )
             if (!data) {
                 error({ content: '获取位置信息失败' })
                 return
@@ -91,7 +104,7 @@ export default class Amap extends React.Component {
             if (coord !== null && !coord && page + 1 <= total / 10) {
                 return await getData(page + 1)
             }
-            return coord;
+            return coord
         }
         if (!data) {
             data = await getData(1)
@@ -100,17 +113,36 @@ export default class Amap extends React.Component {
             }
         }
 
-        if (data) {
-            this.setState({ coord: data})
+        if (data && !callback) {
+            if (this.convertFrom) {
+                this.convertFrom(data, 'gps', this.convertFromCallback)
+            } else {
+                this.coordPool = [...data.coord]
+            }
         }
-        return data
+        if (callback) {
+            callback(data.time)
+        }
+        return data.time
+    }
+
+    convertFromCallback = (status, result) => {
+        if (result.info === 'ok') {
+            var lnglats = result.locations // Array.<LngLat>
+            this.setState({
+                coord: { longitude: lnglats[0].lng, latitude: lnglats[0].lat },
+                visible: true,
+                zoom: 16,
+            })
+        }
     }
 
     decode(dataList) {
         for (let i = 0, len = dataList.length; i < len; i++) {
-            if (new Date(dataList[i].time).getTime() < Date.now() - 60000 * 5) {
-                return null;
-            }
+            // 只获取5分钟内的数据
+            // if (new Date(dataList[i].time).getTime() < Date.now() - 60000 * 5) {
+            //     return null;
+            // }
             let data = JSON.parse(dataList[i].content)
             if (data.service && data.service.data && data.service.data.datas) {
                 // let datas = data.service.data.datas.substring(4)
@@ -118,7 +150,7 @@ export default class Amap extends React.Component {
 
                 let coord = decode(datas)
                 if (coord) {
-                    return coord
+                    return { coord: coord, time: dataList[i].time }
                 }
             }
         }
@@ -140,7 +172,7 @@ export default class Amap extends React.Component {
                         y = [_y[6], _y[7], _y[4], _y[5], _y[2], _y[3], _y[0], _y[1]].join('')
                         x = Number('0x' + x, 16) / 1e6
                         y = Number('0x' + y, 16) / 1e6
-                        return { longitude: x, latitude: y }
+                        return [x, y]
                     }
                 }
             } else {
@@ -149,14 +181,25 @@ export default class Amap extends React.Component {
         }
     }
 
+    events = {
+        created: instance => {
+            this.convertFrom = window.AMap.convertFrom
+            if (this.coordPool.length) {
+                this.convertFrom(this.coordPool, 'gps', this.convertFromCallback)
+            }
+        },
+    }
+
     render() {
-        const { coord, visible } = this.state
+        const { coord, visible, zoom } = this.state
+
         return (
             <Modal {...this.props}>
                 <div style={{ width: '100%', height: 400 }}>
                     <Map
                         amapkey="f68f83101e60f33dbe58f33a88cdddb1"
                         plugins={this.mapPlugins}
+                        events={this.events}
                         center={coord}
                         loading={
                             <div
@@ -170,7 +213,7 @@ export default class Amap extends React.Component {
                                 <Spin tip="地图加载中..."></Spin>
                             </div>
                         }
-                        zoom={16}
+                        zoom={zoom}
                     >
                         <Marker position={coord} visible={visible} />
                     </Map>

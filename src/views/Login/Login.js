@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'antd'
+import { Button, message} from 'antd'
 import cookie from 'util/cookie'
 import './Login.css'
 
@@ -21,9 +21,17 @@ export default class Login extends React.Component {
 
     onLogin = event => {
         event.preventDefault()
+        const {user, pwd} = this.state;
+        if (user !== 'niyuanjie' || pwd !==  'niyj@znsbxt135') {
+            this.setState({ loading: true, loadingTex: '登录中' })
+            window.setTimeout(() => {
+                message.info('账号或密码不正确')
+                this.setState({ loading: false, loadingTex: '登录' })
+            }, 800)
+            return
+        }
         this.setState({ loading: true, loadingTex: '登录中' })
         const { history, location } = this.props
-        console.log(this.props)
         const pathname = location.state ? (location.state.from ? location.state.from.pathname : '/') : '/'
         window.setTimeout(() => {
             cookie.set(

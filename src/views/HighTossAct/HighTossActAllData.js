@@ -24,7 +24,6 @@ const capsNumber = [
 ]
 const DAY = 1000 * 3600 * 24;
 const date = new Date('2020-1-8');
-console.log(date)
 const yyMMdd = {
     yy: date.getFullYear(),
     MM: date.getMonth(),
